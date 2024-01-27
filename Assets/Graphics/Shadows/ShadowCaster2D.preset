@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShadowCaster2D
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShadowGroup
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ComponentVersion
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HasRenderer
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UseRendererSilhouette
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_CastsShadows
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SelfShadows
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ApplyToSortingLayers.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ApplyToSortingLayers.Array.data[0]
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.size
+    value: 6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[0].x
+    value: -0.52948
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[0].y
+    value: 0.9942875
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[0].z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[1].x
+    value: -2.5298982
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[1].y
+    value: 0.9955101
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[1].z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[2].x
+    value: -2.5316927
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[2].y
+    value: -2.0070496
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[2].z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[3].x
+    value: -1.5249131
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[3].y
+    value: -2.0090466
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[3].z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[4].x
+    value: -1.5252489
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[4].y
+    value: -0.0037460327
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[4].z
+    value: 0.00000017881393
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[5].x
+    value: -0.52912354
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[5].y
+    value: -0.009124756
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePath.Array.data[5].z
+    value: 0.00000017881393
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ShapePathHash
+    value: -1056992881
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Mesh
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_InstanceId
+    value: 29362
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Center.x
+    value: -1.5304081
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Center.y
+    value: -0.5067682
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Center.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Extent.x
+    value: 1.0012846
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Extent.y
+    value: 1.5022783
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LocalBounds.m_Extent.z
+    value: 0
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
