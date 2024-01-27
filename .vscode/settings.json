@@ -52,5 +52,6 @@
         "Temp/": true
     },
     "dotnet.defaultSolution": "LAbJV3.sln",
-    "dotnet.preferCSharpExtension": true
+    "dotnet.preferCSharpExtension": true,
+    "gitdoc.enabled": true
 }
