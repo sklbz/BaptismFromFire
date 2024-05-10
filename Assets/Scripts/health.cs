@@ -7,11 +7,10 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Assertions.Must;
 
-public class health : MonoBehaviour
-{
-    public float Hello;
+public class health : MonoBehaviour {
+    public float totalTime;
     int _healthPoints = 60;
-    public int healthPoints{
+    public int healthPoints {
         set {
             _healthPoints = Mathf.Clamp(value, 0, 60);
         }
@@ -46,6 +45,12 @@ public class health : MonoBehaviour
 
     Animator _anim;
 
+    [SerializeField]
+    DeathMessage deathTxt;
+
+    [SerializeField]
+    GameObject regenIcon;
+
     void Awake() 
     {
         charJump = GetComponent<CharacterJump>();
@@ -61,7 +66,7 @@ public class health : MonoBehaviour
 
     void Update()
     {
-        Hello += Time.unscaledDeltaTime;
+        totalTime += Time.unscaledDeltaTime;
         if (healthPoints == 0)
         {
             Resurrect();
@@ -71,14 +76,15 @@ public class health : MonoBehaviour
         timer += Time.deltaTime;
         if(timer >= Time.timeScale)
         {
-            removeHealth();
+            RemoveHealth();
             timer = 0f;
         }
     }
 
     void Resurrect() {
+        deathTxt.GenerateMessage();
         GetComponent<PlayerController>().canMove = false;
-        Hello = 0f;
+        totalTime = 0f;
         _rb.velocity = Vector2.zero;
         StartCoroutine(RevivalTransition());
         transform.position = restartPos[restartIndex];
@@ -104,12 +110,13 @@ public class health : MonoBehaviour
         bloom.threshold.value = 0.55f;
     }
 
-    void removeHealth()
+    void RemoveHealth()
     {
         healthPoints--;
-         
+
+       // regenIcon.SetActive(false);
     }
-        
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         if(coll.gameObject.CompareTag("Heal")){
@@ -174,7 +181,8 @@ public class health : MonoBehaviour
     void HandleHealZone() 
     {
         healthPoints = 60;
-            timer = 0f;
+        timer = 0f;
+        regenIcon.SetActive(true);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
