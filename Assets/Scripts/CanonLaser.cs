@@ -48,7 +48,7 @@ public class CanonLaser : MonoBehaviour
 
     IEnumerable Cooldown() {
         _isShooting = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds( 5 * Time.timeScale );
         _isShooting = false;
     }
 }
