@@ -40,13 +40,13 @@ public class CanonLaser : MonoBehaviour
     }
 
     void ShootingProcedure() {
-        StartCoroutine("Cooldown");
+        StartCoroutine(Cooldown());
         Quaternion rotation = Quaternion.FromToRotation(Vector2.zero, direction);
         Instantiate(particlePrefab, transform.position, rotation);
         Instantiate(laserPrefab, transform.position, rotation);
     }
 
-    IEnumerable Cooldown() {
+    IEnumerator Cooldown() {
         _isShooting = true;
         yield return new WaitForSeconds( 5 * Time.timeScale );
         _isShooting = false;
