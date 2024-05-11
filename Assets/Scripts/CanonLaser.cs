@@ -8,6 +8,8 @@ public class CanonLaser : MonoBehaviour
     Vector2 direction;
     [SerializeField]
     float distance;
+    [SerializeField]
+    LayerMask playerLayer;
     bool isPlayerAligned;
 
     void Update()
