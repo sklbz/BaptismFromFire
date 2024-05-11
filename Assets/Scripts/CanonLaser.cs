@@ -22,10 +22,10 @@ public class CanonLaser : MonoBehaviour
 
     void Update()
     {
-        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
-
-        if (!_isVisible)
+        if (!_isVisible || !_isShooting)
             return;
+
+        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
 
         if (isPlayerAligned)
             ShootingProcedure();
@@ -40,6 +40,7 @@ public class CanonLaser : MonoBehaviour
     }
 
     void ShootingProcedure() {
+        StartCoroutine("Cooldown");
         Quaternion rotation = Quaternion.FromToRotation(Vector2.zero, direction);
         Instantiate(particlePrefab, transform.position, rotation);
         Instantiate(laserPrefab, transform.position, rotation);
