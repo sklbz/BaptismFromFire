@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CanonLaser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    Vector2 direction;
+    [SerializeField]
+    float distance;
+    bool isPlayerAligned;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        isPlayerAligned = Physics2D.Raycast(transform.position, direction, distance);
     }
 }
