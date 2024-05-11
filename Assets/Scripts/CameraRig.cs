@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraRig : MonoBehaviour {
 
-	[SerializeField]
 	Transform player;
 	[SerializeField]
 	Vector3 camOffset;
@@ -13,6 +12,7 @@ public class CameraRig : MonoBehaviour {
 
 	void Start()
 	{
+		player = GameObject.FindObjectOfType<PlayerController>().transform;
 		transform.position = player.transform.position + camOffset;
 	}
 

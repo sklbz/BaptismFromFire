@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     CharacterJump characterJump;
 
     ChromaticAberration chromatic;
+    MotionBlur motionBlur;
 
     Coroutine chromaticCoroutine;
     Coroutine dashCoroutine;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
         characterJump = GetComponent<CharacterJump>();
 
         GetComponent<health>().postProcess.profile.TryGet(out chromatic);
+        GetComponent<health>().postProcess.profile.TryGet(out motionBlur);
+
     }
 
     void Update()
@@ -75,7 +78,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        chromaticCoroutine = StartCoroutine(ChromaticAberration());;
+        StartCoroutine(MotionBlur());
+        chromaticCoroutine = StartCoroutine(ChromaticAberration());
         canDash = false;
         isDashing = true;
         float originalGravity = rb2d.gravityScale;
@@ -111,13 +115,23 @@ public class PlayerController : MonoBehaviour
         rb2d.gravityScale = originalGravity;
         isDashing = false;
         StopCoroutine(chromaticCoroutine);
-        chromatic.intensity.value = 0.08f;
+        chromatic.intensity.value = 0.4f;
+        motionBlur.intensity.value = 0.2f;
         yield return new WaitForSeconds(dashingCooldown * Time.timeScale);
         canDash = true;
     }
 
-    IEnumerator ChromaticAberration()
+    IEnumerator MotionBlur()
     {
+        float blurValue = motionBlur.intensity.value;
+
+        motionBlur.intensity.value = 1f;
+        yield return new WaitForSeconds(dashingTime * Time.timeScale);
+
+        motionBlur.intensity.value = blurValue;
+    }
+
+    IEnumerator ChromaticAberration() {
         float timerChromatic = 0f;
         float chromaticValue = chromatic.intensity.value;
 
@@ -132,4 +146,5 @@ public class PlayerController : MonoBehaviour
         }
         chromatic.intensity.value = chromaticValue;
     }
+
 }
