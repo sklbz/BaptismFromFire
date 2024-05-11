@@ -27,6 +27,7 @@ public class CanonLaser : MonoBehaviour
             return;
 
         if (isPlayerAligned)
+
     }
 
     void OnBecameVisible() {
