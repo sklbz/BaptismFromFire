@@ -22,7 +22,7 @@ public class CanonLaser : MonoBehaviour
 
     void Update()
     {
-        if (!_isVisible || !_isShooting)
+        if (!_isVisible || _isShooting)
             return;
 
         isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
