@@ -11,12 +11,15 @@ public class CanonLaser : MonoBehaviour
     [SerializeField]
     GameObject laserPrefab, particlePrefab;
 
+    Transform laserSpot;
+
     LayerMask playerLayer;
     bool isPlayerAligned;
     bool _isVisible;
     bool _isShooting;
 
     private void Start() {
+        laserSpot = GetComponentInChildren<LaserSpot>().transform;
         playerLayer = LayerMask.GetMask("Player");
     }
 
@@ -41,9 +44,14 @@ public class CanonLaser : MonoBehaviour
 
     void ShootingProcedure() {
         StartCoroutine(Cooldown());
-        Quaternion rotation = Quaternion.FromToRotation(Vector2.zero, direction);
-        Instantiate(particlePrefab, transform.position, rotation);
-        Instantiate(laserPrefab, transform.position, rotation);
+        Shoot();
+    }
+
+    void Shoot() {
+        Quaternion rotation = Quaternion.identity;
+        Vector3 position = laserSpot.position;
+        Instantiate(particlePrefab, position, rotation);
+        Instantiate(laserPrefab, position, rotation);
     }
 
     IEnumerator Cooldown() {
