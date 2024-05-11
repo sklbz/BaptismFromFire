@@ -14,6 +14,7 @@ public class CanonLaser : MonoBehaviour
     LayerMask playerLayer;
     bool isPlayerAligned;
     bool _isVisible;
+    bool _isShooting;
 
     private void Start() {
         playerLayer = LayerMask.GetMask("Player");
@@ -27,7 +28,7 @@ public class CanonLaser : MonoBehaviour
             return;
 
         if (isPlayerAligned)
-
+            ShootingProcedure();
     }
 
     void OnBecameVisible() {
@@ -39,7 +40,14 @@ public class CanonLaser : MonoBehaviour
     }
 
     void ShootingProcedure() {
-         Instantiate(particlePrefab, transform.position, Quaternion.identity);
-        Instantiate(laserPrefab, transform.position, Quaternion.identity);
+        Quaternion rotation = Quaternion.FromToRotation(Vector2.zero, direction);
+        Instantiate(particlePrefab, transform.position, rotation);
+        Instantiate(laserPrefab, transform.position, rotation);
+    }
+
+    IEnumerable Cooldown() {
+        _isShooting = true;
+        yield return new WaitForSeconds(5);
+        _isShooting = false;
     }
 }
