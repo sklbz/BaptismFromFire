@@ -9,7 +9,7 @@ public class CanonLaser : MonoBehaviour
     Vector2 direction;
 
     [SerializeField]
-    GameObject laserPrefab, particlePrefab;
+    GameObject laserPrefab, particlePrefab, flashPrefab;
 
     Transform laserSpot;
 
@@ -60,6 +60,7 @@ public class CanonLaser : MonoBehaviour
 
     IEnumerator GenerateLaser(Vector2 position, Quaternion rotation) {
         yield return new WaitForSeconds(2);
+        Instantiate(flashPrefab, position, rotation, laserSpot);
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
         laserBeam.SetPosition(1, direction * 20);
 
