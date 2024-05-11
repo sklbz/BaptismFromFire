@@ -52,7 +52,7 @@ public class CanonLaser : MonoBehaviour
         Vector3 position = laserSpot.position;
         Instantiate(particlePrefab, position, rotation, laserSpot);
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
-        laserBeam.SetPosition(1, direction);
+        laserBeam.SetPosition(1, direction * 1000);
     }
 
     IEnumerator Cooldown() {
