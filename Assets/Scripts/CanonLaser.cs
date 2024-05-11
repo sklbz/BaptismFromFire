@@ -28,7 +28,7 @@ public class CanonLaser : MonoBehaviour
         if (!_isVisible || _isShooting)
             return;
 
-        isPlayerAligned = Physics2D.Raycast(transform.position, direction, 300, playerLayer);
+        isPlayerAligned = PlayerAligned(); 
 
         Debug.Log(isPlayerAligned);
 
@@ -70,7 +70,7 @@ public class CanonLaser : MonoBehaviour
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
         laserBeam.SetPosition(1, direction * 30);
 
-        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
+        isPlayerAligned = PlayerAligned();
 
         if (isPlayerAligned)
             Kill();
@@ -88,7 +88,7 @@ public class CanonLaser : MonoBehaviour
 
     bool PlayerAligned() {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 300, playerLayer);
-        bool RaycastSucces = (bool)hit;
+        bool RaycastSucces = (bool) hit;
         return RaycastSucces && hit.collider.CompareTag("Player");
     }
 }
