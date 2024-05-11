@@ -75,7 +75,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -84,7 +84,7 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!81 &3392615934510906401
@@ -164,6 +164,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91ab87ec1b554aeeaae8e426783b039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   camOffset: {x: 0, y: 0, z: -10}
   interpolationRatio: 2.5

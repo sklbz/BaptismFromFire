@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7335051456506468565}
   - component: {fileID: 5216723841704450722}
-  m_Layer: 13
+  - component: {fileID: 5677894931154023035}
+  m_Layer: 0
   m_Name: laser_purple_emissive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +80,7 @@ LineRenderer:
   - {x: 10, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -136,3 +137,15 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &5677894931154023035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6185972374342659641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4f7a634b389d54dae53ebf14b0aefd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -55,8 +55,8 @@ Material:
     - _QueueOffset: 0
     - _Recolorization: 0.3
     - _Scale: 5
-    - _Speed: 0.001
-    - _Thickness: 30
+    - _Speed: -0.05
+    - _Thickness: 1
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 1, a: 0.3921569}
+    - _Color: {r: 1, g: 0, b: 1, a: 0.39215687}
   m_BuildTextureStacks: []
