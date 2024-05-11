@@ -25,13 +25,10 @@ public class CanonLaser : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Physics2D.Raycast(transform.position, direction, 30, playerLayer).collider.gameObject);
-        Debug.DrawRay(transform.position, direction, Color.yellow);
-
         if (!_isVisible || _isShooting)
             return;
 
-        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
+        isPlayerAligned = Physics2D.Raycast(transform.position, direction, 300, playerLayer);
 
         if (isPlayerAligned)
             ShootingProcedure();
