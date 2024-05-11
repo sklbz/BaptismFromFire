@@ -59,7 +59,7 @@ public class CanonLaser : MonoBehaviour
     }
 
     IEnumerator GenerateLaser(Vector2 position, Quaternion rotation) {
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSeconds(2);
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
         laserBeam.SetPosition(1, direction * 20);
 
