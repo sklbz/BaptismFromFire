@@ -8,6 +8,9 @@ public class CanonLaser : MonoBehaviour
     [SerializeField]
     Vector2 direction;
 
+    [SerializeField]
+    GameObject laserPrefab, particlePrefab;
+
     LayerMask playerLayer;
     bool isPlayerAligned;
     bool _isVisible;
@@ -23,6 +26,7 @@ public class CanonLaser : MonoBehaviour
         if (!_isVisible)
             return;
 
+        if (isPlayerAligned)
     }
 
     void OnBecameVisible() {
@@ -31,5 +35,10 @@ public class CanonLaser : MonoBehaviour
 
     void OnBecameInvisible() {
         _isVisible = false;
+    }
+
+    void ShootingProcedure() {
+         Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        Instantiate(laserPrefab, transform.position, Quaternion.identity);
     }
 }
