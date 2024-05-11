@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7422801822331343169}
   - component: {fileID: 7165110494880873560}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: volumetricLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 136640739171292866}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CheckLeft
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1788672975960067663}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CheckGround
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 5781076431923655180}
   - component: {fileID: 1224930302539721511}
   - component: {fileID: 4742370089470309148}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4988,7 +4988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7083681461331038351}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CheckRight
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -5029,7 +5029,7 @@ GameObject:
   - component: {fileID: 3890207036026339269}
   - component: {fileID: 1388607713813225246}
   - component: {fileID: 1823577017105210457}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5394,7 +5394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1067671698849494269}
   - component: {fileID: 9201543695218395424}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

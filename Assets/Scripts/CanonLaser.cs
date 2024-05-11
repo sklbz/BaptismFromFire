@@ -6,10 +6,10 @@ public class CanonLaser : MonoBehaviour
 {
     [SerializeField]
     Vector2 direction;
-    [SerializeField]
-    float distance;
+
     LayerMask playerLayer;
     bool isPlayerAligned;
+    bool _isVisible;
 
     private void Start() {
         playerLayer = LayerMask.GetMask("Player");
@@ -17,6 +17,18 @@ public class CanonLaser : MonoBehaviour
 
     void Update()
     {
-        isPlayerAligned = Physics2D.Raycast(transform.position, direction, distance, playerLayer);
+        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
+
+        if (!_isVisible)
+            return;
+
+    }
+
+    void OnBecameVisible() {
+        _isVisible = true;
+    }
+
+    void OnBecameInvisible() {
+        _isVisible = false;
     }
 }
