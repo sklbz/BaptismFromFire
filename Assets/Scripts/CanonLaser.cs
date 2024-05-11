@@ -30,6 +30,8 @@ public class CanonLaser : MonoBehaviour
 
         isPlayerAligned = Physics2D.Raycast(transform.position, direction, 300, playerLayer);
 
+        Debug.Log(isPlayerAligned);
+
         if (isPlayerAligned)
             ShootingProcedure();
     }
@@ -82,5 +84,11 @@ public class CanonLaser : MonoBehaviour
         _isShooting = true;
         yield return new WaitForSecondsRealtime(5);
         _isShooting = false;
+    }
+
+    bool PlayerAligned() {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 300, playerLayer);
+        bool RaycastSucces = (bool)hit;
+        return RaycastSucces && hit.collider.CompareTag("Player");
     }
 }
