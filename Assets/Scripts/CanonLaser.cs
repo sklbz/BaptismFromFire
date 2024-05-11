@@ -25,6 +25,8 @@ public class CanonLaser : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(Physics2D.Raycast(transform.position, direction, playerLayer));
+
         if (!_isVisible || _isShooting)
             return;
 
@@ -59,11 +61,23 @@ public class CanonLaser : MonoBehaviour
     }
 
     IEnumerator GenerateLaser(Vector2 position, Quaternion rotation) {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.9f);
+        
         Instantiate(flashPrefab, position, rotation, laserSpot);
+
+        yield return new WaitForSeconds(.1f);
+
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
         laserBeam.SetPosition(1, direction * 20);
 
+        isPlayerAligned = Physics2D.Raycast(transform.position, direction, playerLayer);
+
+        if (isPlayerAligned)
+            Kill();
+    }
+
+    void Kill() {
+        GameObject.FindObjectOfType<health>().Resurrect();
     }
 
     IEnumerator Cooldown() {

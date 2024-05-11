@@ -81,7 +81,7 @@ public class health : MonoBehaviour {
         }
     }
 
-    void Resurrect() {
+    public void Resurrect() {
         deathTxt.GenerateMessage();
         GetComponent<PlayerController>().canMove = false;
         totalTime = 0f;
