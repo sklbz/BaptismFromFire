@@ -9,18 +9,20 @@ public class CanonLaser : MonoBehaviour
     Vector2 direction;
 
     [SerializeField]
-    GameObject laserPrefab, particlePrefab, flashPrefab;
+    GameObject laserPrefab, particlePrefab, flashPrefab, boomPrefab;
 
-    Transform laserSpot;
+    Transform laserSpot, player;
 
     LayerMask playerLayer;
     bool isPlayerAligned;
     bool _isVisible;
     bool _isShooting;
 
+    
     private void Start() {
         laserSpot = GetComponentInChildren<LaserSpot>().transform;
         playerLayer = LayerMask.GetMask("Player");
+        player = FindObjectOfType<health>().transform;
     }
 
     void Update()
@@ -77,7 +79,15 @@ public class CanonLaser : MonoBehaviour
     }
 
     void Kill() {
-        GameObject.FindObjectOfType<health>().Resurrect();
+        player.gameObject.SetActive(false);
+        Instantiate(boomPrefab, player.position, Quaternion.identity);
+
+        StartCoroutine(Restart());
+    }
+
+    IEnumerator Restart() {
+        yield return new WaitForSecondsRealtime(2f);
+        player.GetComponent<health>().Resurrect();
     }
 
     IEnumerator Cooldown() {
