@@ -133,7 +133,7 @@ public class health : MonoBehaviour {
         bloom.intensity.value = 100f;
         bloom.threshold.value = 0f;
 
-        while (bloom.threshold.value <= 0.5f)
+        while (bloom.threshold.value < 0.3f)
         {
             bloom.intensity.value = Mathf.Lerp(bloom.intensity.value, 8f, Time.unscaledDeltaTime * .2f);
             bloom.threshold.value = Mathf.Lerp(bloom.threshold.value, 0.55f, Time.unscaledDeltaTime * .1f);

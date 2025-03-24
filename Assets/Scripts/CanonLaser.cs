@@ -79,14 +79,14 @@ public class CanonLaser : MonoBehaviour
     }
 
     void Kill() {
-        //player.gameObject.SetActive(false);
+        player.gameObject.SetActive(false);
         Instantiate(boomPrefab, player.position, Quaternion.identity);
 
         StartCoroutine(Restart());
     }
 
     IEnumerator Restart() {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(.5f);
         player.GetComponent<health>().Resurrect();
     }
 
