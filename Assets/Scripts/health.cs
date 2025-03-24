@@ -36,6 +36,9 @@ public class health : MonoBehaviour {
     CharacterJump charJump;
     PlayerController charController;
     hover charHover;
+    Light2D lightsource;
+
+    float maxLight = 2f, minLight = 0f, lightInterp = .5f;
 
     [SerializeField]
     public Volume postProcess;
@@ -44,12 +47,6 @@ public class health : MonoBehaviour {
     Rigidbody2D _rb;
 
     Animator _anim;
-
-    [SerializeField]
-    DeathMessage deathTxt;
-
-    [SerializeField]
-    GameObject regenIcon;
 
     void Awake() 
     {
@@ -62,11 +59,14 @@ public class health : MonoBehaviour {
         _rb = GetComponent<Rigidbody2D>();
 
         _anim = GetComponent<Animator>();
+
+        lightsource = GetComponent<Light2D>();
     }
 
     void Update()
     {
         totalTime += Time.unscaledDeltaTime;
+        UpdateLight();
         if (healthPoints == 0)
         {
             Resurrect();
@@ -81,31 +81,65 @@ public class health : MonoBehaviour {
         }
     }
 
+    void UpdateLight() {
+        float desiredLight = Mathf.Lerp(minLight, maxLight, healthPoints * 0.017f);
+        lightsource.intensity = Mathf.Lerp(lightsource.intensity, desiredLight, lightInterp);
+    }
+
     public void Resurrect() {
-        deathTxt.GenerateMessage();
         GetComponent<PlayerController>().canMove = false;
         totalTime = 0f;
         _rb.velocity = Vector2.zero;
+        gameObject.SetActive(true);
+
+        // This may be useful for something else,
+        // such as the very beginning, or the very end,
+        // but as is, it is too violent
+        // StartCoroutine(LongTransition());
+
+        // this one might be better
         StartCoroutine(RevivalTransition());
+
         transform.position = restartPos[restartIndex];
         healthPoints = 60;
-        restartIndex--;
+
+        // people seem to dislike this
+        //restartIndex--;
+
         _anim.SetTrigger("Spawn");
         GetComponent<PlayerController>().canMove = true;
     }
 
-    IEnumerator RevivalTransition()
+    IEnumerator LongTransition()
     {
         yield return new WaitForSecondsRealtime(0.2f);
 
         bloom.intensity.value = 15f;
         bloom.threshold.value = 0f;
+
         while (bloom.threshold.value < 0.5f)
         {
             bloom.intensity.value = Mathf.Lerp(bloom.intensity.value, 8f, Time.unscaledDeltaTime / 12f);
             bloom.threshold.value = Mathf.Lerp(bloom.threshold.value, 0.55f, Time.unscaledDeltaTime / 15f);
             yield return null;
         }
+
+        bloom.intensity.value = 8f;
+        bloom.threshold.value = 0.55f;
+    }
+
+    IEnumerator RevivalTransition() {
+
+        bloom.intensity.value = 100f;
+        bloom.threshold.value = 0f;
+
+        while (bloom.threshold.value <= 0.5f)
+        {
+            bloom.intensity.value = Mathf.Lerp(bloom.intensity.value, 8f, Time.unscaledDeltaTime * .2f);
+            bloom.threshold.value = Mathf.Lerp(bloom.threshold.value, 0.55f, Time.unscaledDeltaTime * .1f);
+            yield return null;
+        }
+
         bloom.intensity.value = 8f;
         bloom.threshold.value = 0.55f;
     }
@@ -113,8 +147,6 @@ public class health : MonoBehaviour {
     void RemoveHealth()
     {
         healthPoints--;
-
-       // regenIcon.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -182,7 +214,6 @@ public class health : MonoBehaviour {
     {
         healthPoints = 60;
         timer = 0f;
-        regenIcon.SetActive(true);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
