@@ -166,7 +166,7 @@ public class health : MonoBehaviour {
         if(coll.gameObject.CompareTag("CheckpointDoubleJump")){
             HandleHealZone();
 
-            if (originalRestart < 0)
+            if (originalRestart < 0 && restartIndex <= 1)
                 restartIndex = 1;
 
             if (charJump.canDoubleJump == true)
@@ -178,7 +178,7 @@ public class health : MonoBehaviour {
         if(coll.gameObject.CompareTag("CheckpointDash")){
             HandleHealZone();
 
-            if (restartIndex < 1)
+            if (restartIndex <= 1)
                 restartIndex = 2;
 
             if (charController.canDash == true)
