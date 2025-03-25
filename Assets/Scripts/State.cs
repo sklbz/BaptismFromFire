@@ -5,3 +5,12 @@ public enum CharacterJumpingState {
     STATE_WALL_LEFT,
     STATE_WALL_RIGHT
 }
+
+public enum CharacterState {
+    GROUNDED,
+    JUMPING,
+    DOUBLE_JUMPING,
+    WALL_LEFT,
+    WALL_RIGHT,
+    DASHING
+}
