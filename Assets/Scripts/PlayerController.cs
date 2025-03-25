@@ -12,10 +12,9 @@ public class PlayerController : MonoBehaviour
     float speed = 80f;
     public bool canDash = true, canMove = true;
     bool isDashing;
-    public float dashingPower, interpolationValue = 100f;
-    float dashingVelocity;
-    float dashingTime = 0.2f;
-    float dashingCooldown = 1f;
+    [SerializeField]
+    float dashingPower, interpolationValue = 100f;
+    float dashingVelocity, dashingTime = 0.2f, dashingCooldown = 1f, dashPowerMult = 1000f;
 
     CharacterJump characterJump;
 
@@ -55,9 +54,9 @@ public class PlayerController : MonoBehaviour
             HandleMove();
 
         if (rb2d.velocity.x < 0) {
-            dashingVelocity = -dashingPower; // Se déplace vers la gauche
+            dashingVelocity = -dashingPower * dashPowerMult; // Se déplace vers la gauche
         } else if (rb2d.velocity.x > 0) {
-            dashingVelocity = dashingPower; // Se déplace vers la droite
+            dashingVelocity = dashingPower * dashPowerMult; // Se déplace vers la droite
         } else {
             dashingVelocity = 0; // Aucun mouvement horizontal
         }
@@ -91,11 +90,8 @@ public class PlayerController : MonoBehaviour
             if((characterJump._state == CharacterJumpingState.STATE_WALL_LEFT && dashingVelocity <0) || (characterJump._state == CharacterJumpingState.STATE_WALL_RIGHT && dashingVelocity > 0))
             {
                 StartCoroutine(ForceEndDash(originalGravity));
-                Debug.Log("sdjkfvnsdfjxvnsdfjxc");
                 if(dashCoroutine != null)
                     StopCoroutine(dashCoroutine);
-                else
-                    Debug.Log("WTF");
                 yield break;
             }
             dashTimer += Time.deltaTime;
@@ -106,7 +102,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         StopCoroutine(chromaticCoroutine);
         chromatic.intensity.value = 0.08f;
-        yield return new WaitForSeconds(dashingCooldown * Time.timeScale);
+        yield return new WaitForSecondsRealtime(dashingCooldown);
         canDash = true;
     }
 
@@ -117,7 +113,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(chromaticCoroutine);
         chromatic.intensity.value = 0.4f;
         motionBlur.intensity.value = 0.2f;
-        yield return new WaitForSeconds(dashingCooldown * Time.timeScale);
+        yield return new WaitForSecondsRealtime(dashingCooldown);
         canDash = true;
     }
 
@@ -126,7 +122,7 @@ public class PlayerController : MonoBehaviour
         float blurValue = motionBlur.intensity.value;
 
         motionBlur.intensity.value = 1f;
-        yield return new WaitForSeconds(dashingTime * Time.timeScale);
+        yield return new WaitForSecondsRealtime(dashingTime);
 
         motionBlur.intensity.value = blurValue;
     }

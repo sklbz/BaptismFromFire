@@ -5170,12 +5170,7 @@ MonoBehaviour:
   - {x: 50, y: 145, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  maxLight: 1.89
-  minLight: 1.1
-  lightInterp: 0.9
   postProcess: {fileID: 0}
-  deathTxt: {fileID: 0}
-  regenIcon: {fileID: 0}
 --- !u!114 &8671634511034300786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5191,7 +5186,7 @@ MonoBehaviour:
   speed: 800
   canDash: 0
   canMove: 1
-  dashingPower: 1000
+  dashingPower: 1
   interpolationValue: 0.2
 --- !u!114 &4957891825287904454
 MonoBehaviour:
