@@ -1,3 +1,5 @@
-Fix the revival transition
-Make a cool dash transition
-Add Motion Blur when jumping
+[x] Fix the revival transition
+[] Make a cool dash transition
+[] Add Motion Blur when jumping
+[] Fix respawn system
+[] Add burnable leaves/bushes
