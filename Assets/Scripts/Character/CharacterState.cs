@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterState {
+ 
     virtual public StateName getState() {
         return StateName.DEFAULT;
     }
