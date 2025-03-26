@@ -7,7 +7,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     CharacterState characterState;
-    Rigidbody2D rigidbody;
+    new Rigidbody2D rigidbody;
     [SerializeField]
     LayerMask groundMask;
     float sqrJumpHeight, jumpForce;
