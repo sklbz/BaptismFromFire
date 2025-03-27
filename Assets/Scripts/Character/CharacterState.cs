@@ -37,6 +37,9 @@ public class GroundState : CharacterState {
             return new JumpingState();
         }
 
+        if (!controller.IsGrounded())
+            return new JumpingState();
+
         return this;
     }
 }
@@ -44,8 +47,9 @@ public class GroundState : CharacterState {
 public class IdleState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
-        if (base.handleInput(controller).getState() == StateName.GROUNDED)
-            return this;
+        CharacterState baseState = base.handleInput(controller);
+        if (baseState.getState() != StateName.GROUNDED)
+            return baseState;
 
         if (Input.GetAxisRaw("Horizontal") != 0)
             return new MovingState();
@@ -57,9 +61,9 @@ public class IdleState : GroundState {
 public class MovingState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
-
-        if (base.handleInput(controller).getState() == StateName.GROUNDED)
-            return this;
+        CharacterState baseState = base.handleInput(controller);
+        if (baseState.getState() != StateName.GROUNDED)
+            return baseState;
 
         if (Input.GetAxisRaw("Horizontal") == 0)
             return new IdleState();
@@ -75,6 +79,8 @@ public class JumpingState : CharacterState {
     }
 
     public override CharacterState handleInput(CharacterController controller) {
+        base.handleInput(controller);
+
         if (controller.IsGrounded())
             return new IdleState();
 
