@@ -12,7 +12,7 @@ public class CameraRig : MonoBehaviour {
 
 	void Start()
 	{
-		player = GameObject.FindObjectOfType<PlayerController>().transform;
+		player = GameObject.FindObjectOfType<Character>().transform;
 		transform.position = player.transform.position + camOffset;
 	}
 

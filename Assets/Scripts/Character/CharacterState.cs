@@ -12,6 +12,8 @@ public class CharacterState {
 
         handleHorizontal(controller);
 
+        controller.Move(5f);
+
         return this;
     }
 
@@ -19,6 +21,7 @@ public class CharacterState {
         float motion = Input.GetAxisRaw("Horizontal");
 
         controller.Move(motion);
+        Debug.Log("hi");
     }
 }
 
@@ -29,9 +32,13 @@ public class GroundState : CharacterState {
     }
 
     public override CharacterState handleInput(CharacterController controller) {
+        base.handleInput(controller);
 
         if (Input.GetButtonDown("Jump"))
+        {
+            controller.VerticalJump();
             return new JumpingState();
+        }
 
         return this;
     }
@@ -40,10 +47,11 @@ public class GroundState : CharacterState {
 public class IdleState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
-        if (base.handleInput().getState() == StateName.GROUNDED)
+        Debug.Log("hey");
+        if (base.handleInput(controller).getState() == StateName.GROUNDED)
             return this;
 
-        if (Input.GetButton("Move"))
+        if (Input.GetAxisRaw("Horizontal") != 0)
             return new MovingState();
 
         return this;
@@ -54,11 +62,11 @@ public class MovingState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
 
-        if (base.handleInput().getState() == StateName.GROUNDED)
+        if (base.handleInput(controller).getState() == StateName.GROUNDED)
             return this;
 
-        if (!Input.GetButton("Move"))
-            return new MovingState();
+        if (Input.GetAxisRaw("Horizontal") == 0)
+            return new IdleState();
 
         return this;
     }
@@ -71,6 +79,9 @@ public class JumpingState : CharacterState {
     }
 
     public override CharacterState handleInput(CharacterController controller) {
+        if (controller.IsGrounded())
+            return new IdleState();
+
         return this;
     }
 }

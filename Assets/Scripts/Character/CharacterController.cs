@@ -10,21 +10,23 @@ public class CharacterController : MonoBehaviour
     new Rigidbody2D rigidbody;
     [SerializeField]
     LayerMask groundMask;
+    [SerializeField]
     List<Transform> groundChecks;
-    float sqrJumpHeight, jumpForce;
-    float speed = 1f, speedFactor = 1f;
+    float sqrJumpHeight = 2f, jumpForce;
+    float speed = 10f, speedFactor = 1f;
 
     void Start()
     {
-        characterState = GetComponent<CharacterState>();
+        characterState = new IdleState();
         rigidbody = GetComponent<Rigidbody2D>();
         jumpForce = Mathf.Sqrt(-2f * Physics2D.gravity.y * rigidbody.gravityScale);
     }
 
     void Update()
     {
-
-        characterState = characterState.handleInput();
+        characterState = characterState.handleInput(this);
+        Debug.Log(characterState.getState());
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
     }
 
     public void Move(float motion) {
