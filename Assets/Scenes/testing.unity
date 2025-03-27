@@ -22288,7 +22288,7 @@ Transform:
   m_GameObject: {fileID: 9061346423035932720}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 2.4, z: 0}
+  m_LocalPosition: {x: -3, y: 3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -645159,7 +645159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalTime: 0
   timer: 0
-  restartPos: []
+  restartPos:
+  - {x: -3, y: 3, z: 0}
   postProcess: {fileID: 980141612}
 --- !u!19719996 &9099574753142460111
 TilemapCollider2D:

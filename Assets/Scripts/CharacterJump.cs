@@ -201,7 +201,7 @@ public class CharacterJump : MonoBehaviour
 
         JumpAnim();
 
-        StartCoroutine(ResetHorizontalVelocity());
+        //StartCoroutine(ResetHorizontalVelocity());
     }
 
     void JumpAnim()

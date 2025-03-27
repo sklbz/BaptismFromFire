@@ -12,17 +12,17 @@ public class CharacterController : MonoBehaviour
     LayerMask groundMask;
     [SerializeField]
     List<Transform> groundChecks;
-    float sqrJumpHeight = 2f, jumpForce;
-    float speed = 1f, speedFactor = 80f;
+    float sqrJumpHeight = 2f, jumpForce, jumpFactor = .8f;
+    float speed = 4f, speedFactor = 150f;
 
     void Start()
     {
         characterState = new IdleState();
         rigidbody = GetComponent<Rigidbody2D>();
-        jumpForce = Mathf.Sqrt(-2f * Physics2D.gravity.y * rigidbody.gravityScale);
+        jumpForce = Mathf.Sqrt(-2f * Physics2D.gravity.y * rigidbody.gravityScale * jumpFactor);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         characterState = characterState.handleInput(this);
         Debug.Log(Input.GetAxisRaw("Horizontal"));
