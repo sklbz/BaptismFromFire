@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine;
+using UnityEngine; 
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController : MonoBehaviour
@@ -10,8 +10,9 @@ public class CharacterController : MonoBehaviour
     new Rigidbody2D rigidbody;
     [SerializeField]
     LayerMask groundMask;
-    float sqrJumpHeight, jumpForce;
     List<Transform> groundChecks;
+    float sqrJumpHeight, jumpForce;
+    float speed = 1f, speedFactor = 1f;
 
     void Start()
     {
@@ -24,6 +25,13 @@ public class CharacterController : MonoBehaviour
     {
 
         characterState = characterState.handleInput();
+    }
+
+    public void Move(float motion) {
+
+        motion *= speed * speedFactor * Time.unscaledDeltaTime * rigidbody.gravityScale;
+
+        rigidbody.velocity = new Vector2(motion, rigidbody.velocity.y);
     }
 
     public void VerticalJump() {

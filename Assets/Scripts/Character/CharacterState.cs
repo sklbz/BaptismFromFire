@@ -8,8 +8,17 @@ public class CharacterState {
         return StateName.DEFAULT;
     }
 
-    virtual public CharacterState handleInput() {
+    virtual public CharacterState handleInput(CharacterController controller) {
+
+        handleHorizontal(controller);
+
         return this;
+    }
+
+    void handleHorizontal(CharacterController controller) {
+        float motion = Input.GetAxisRaw("Horizontal");
+
+        controller.Move(motion);
     }
 }
 
@@ -19,7 +28,7 @@ public class GroundState : CharacterState {
         return StateName.GROUNDED;
     }
 
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
 
         if (Input.GetButtonDown("Jump"))
             return new JumpingState();
@@ -29,7 +38,7 @@ public class GroundState : CharacterState {
 }
 
 public class IdleState : GroundState {
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
 
         if (base.handleInput().getState() == StateName.GROUNDED)
             return this;
@@ -42,7 +51,7 @@ public class IdleState : GroundState {
 }
 
 public class MovingState : GroundState {
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
 
 
         if (base.handleInput().getState() == StateName.GROUNDED)
@@ -61,7 +70,7 @@ public class JumpingState : CharacterState {
         return StateName.JUMPING;
     }
 
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
         return this;
     }
 }
@@ -72,7 +81,7 @@ public class WallSlidingState : CharacterState {
         return StateName.WALL_SLIDING;
     }
 
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
         return this;
     }
 }
@@ -83,9 +92,7 @@ public class DashingState : CharacterState {
         return StateName.DASHING;
     }
 
-    public override CharacterState handleInput() {
+    public override CharacterState handleInput(CharacterController controller) {
         return this;
     }
 }
-
-
