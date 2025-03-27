@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         characterState = characterState.handleInput(this);
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
     }
 
     public void Move(float motion) {

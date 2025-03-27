@@ -87,7 +87,6 @@ public class health : MonoBehaviour {
     }
 
     public void Resurrect() {
-        GetComponent<PlayerController>().canMove = false;
         totalTime = 0f;
         _rb.velocity = Vector2.zero;
         gameObject.SetActive(true);
@@ -107,7 +106,6 @@ public class health : MonoBehaviour {
         //restartIndex--;
 
         _anim.SetTrigger("Spawn");
-        GetComponent<PlayerController>().canMove = true;
     }
 
     IEnumerator LongTransition()
