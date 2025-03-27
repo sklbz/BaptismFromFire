@@ -45,4 +45,8 @@ public class CharacterController : MonoBehaviour
         };
         return groundCheckDown;
     }
+
+    public StateName getState() {
+        return characterState.getState();
+    }
 }
