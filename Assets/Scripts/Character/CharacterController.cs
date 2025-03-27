@@ -13,7 +13,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     List<Transform> groundChecks;
     float sqrJumpHeight = 2f, jumpForce;
-    float speed = 10f, speedFactor = 1f;
+    float speed = 1f, speedFactor = 80f;
 
     void Start()
     {
@@ -25,8 +25,6 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         characterState = characterState.handleInput(this);
-        Debug.Log(characterState.getState());
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
     }
 
     public void Move(float motion) {

@@ -230,7 +230,7 @@ MonoBehaviour:
   laserPrefab: {fileID: 6185972374342659641, guid: 4afe91f783cd9c444baa3d3080b1396e, type: 3}
   particlePrefab: {fileID: 4880303316833313011, guid: 27e559516c18f994e92e8b9d44031497, type: 3}
   flashPrefab: {fileID: 5501869443294245519, guid: 01c21e074e7ed69409c12145b5c36269, type: 3}
-  boomPrefab: {fileID: 7329590022228277831, guid: ab247a88aed8aef47987d52e8126425e, type: 3}
+  boomPrefab: {fileID: 5761152714798454432, guid: 010e8d63ab41749468bbecb970b5cbbb, type: 3}
 --- !u!1 &7851008435608599380
 GameObject:
   m_ObjectHideFlags: 0

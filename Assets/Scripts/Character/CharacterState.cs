@@ -12,8 +12,6 @@ public class CharacterState {
 
         handleHorizontal(controller);
 
-        controller.Move(5f);
-
         return this;
     }
 
@@ -21,7 +19,6 @@ public class CharacterState {
         float motion = Input.GetAxisRaw("Horizontal");
 
         controller.Move(motion);
-        Debug.Log("hi");
     }
 }
 
@@ -47,7 +44,6 @@ public class GroundState : CharacterState {
 public class IdleState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
-        Debug.Log("hey");
         if (base.handleInput(controller).getState() == StateName.GROUNDED)
             return this;
 

@@ -22,7 +22,7 @@ public class CanonLaser : MonoBehaviour
     private void Start() {
         laserSpot = GetComponentInChildren<LaserSpot>().transform;
         playerLayer = LayerMask.GetMask("Player");
-        player = FindObjectOfType<health>().transform;
+        player = FindObjectOfType<Character>().transform;
     }
 
     void Update()
