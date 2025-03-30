@@ -25,7 +25,6 @@ public class CharacterController : MonoBehaviour
     void FixedUpdate()
     {
         characterState = characterState.handleInput(this);
-        Debug.Log(characterState.getState());
     }
 
     public void Move(float motion) {
@@ -39,6 +38,15 @@ public class CharacterController : MonoBehaviour
         float velocity = sqrJumpHeight * jumpForce;
 
         rigidbody.velocity = new Vector2(0f, velocity);
+    }
+
+    public void WallJump(float direction) {
+        if (Mathf.Pow(direction, 2) != 1)
+            direction /= Mathf.Abs(direction);
+        float velocity = sqrJumpHeight;
+
+        Vector2 motion = new Vector2(direction, 1);
+        rigidbody.velocity = new Vector2(1, 1);
     }
 
     public bool IsGrounded() {

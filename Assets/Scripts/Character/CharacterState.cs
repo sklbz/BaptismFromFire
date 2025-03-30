@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StateName;
 
 public class CharacterState {
  
     virtual public StateName getState() {
-        return StateName.DEFAULT;
+        return DEFAULT;
     }
 
     virtual public CharacterState handleInput(CharacterController controller) {
@@ -25,7 +26,7 @@ public class CharacterState {
 public class GroundState : CharacterState {
 
     public override StateName getState() {
-        return StateName.GROUNDED;
+        return GROUNDED;
     }
 
     public override CharacterState handleInput(CharacterController controller) {
@@ -48,7 +49,7 @@ public class IdleState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
         CharacterState baseState = base.handleInput(controller);
-        if (baseState.getState() != StateName.GROUNDED)
+        if (baseState.getState() != GROUNDED)
             return baseState;
 
         if (Input.GetAxisRaw("Horizontal") != 0)
@@ -62,7 +63,7 @@ public class MovingState : GroundState {
     public override CharacterState handleInput(CharacterController controller) {
 
         CharacterState baseState = base.handleInput(controller);
-        if (baseState.getState() != StateName.GROUNDED)
+        if (baseState.getState() != GROUNDED)
             return baseState;
 
         if (Input.GetAxisRaw("Horizontal") == 0)
@@ -75,7 +76,7 @@ public class MovingState : GroundState {
 public class JumpingState : CharacterState {
 
     public override StateName getState() {
-        return StateName.JUMPING;
+        return JUMPING;
     }
 
     public override CharacterState handleInput(CharacterController controller) {
@@ -91,10 +92,34 @@ public class JumpingState : CharacterState {
 public class WallSlidingState : CharacterState {
 
     public override StateName getState() {
-        return StateName.WALL_SLIDING;
+        return WALL_SLIDING;
     }
 
     public override CharacterState handleInput(CharacterController controller) {
+        if (controller.IsGrounded())
+            return new IdleState();
+
+        if (Input.GetButtonDown("Jump"))
+            return new JumpingState();
+
+        return this;
+    }
+}
+
+public class WallLeftState : WallSlidingState {
+    public override CharacterState handleInput(CharacterController controller) {
+        CharacterState baseState = base.handleInput(controller);
+        StateName baseName = baseState.getState();
+
+        if (baseName == GROUNDED)
+            return baseState;
+        if (baseName == JUMPING)
+        {
+            float direction = 1f;
+            controller.WallJump(direction);
+            return baseState;
+        }
+
         return this;
     }
 }
@@ -102,7 +127,7 @@ public class WallSlidingState : CharacterState {
 public class DashingState : CharacterState {
 
     public override StateName getState() {
-        return StateName.DASHING;
+        return DASHING;
     }
 
     public override CharacterState handleInput(CharacterController controller) {
