@@ -41,12 +41,16 @@ public class CharacterController : MonoBehaviour
     }
 
     public void WallJump(float direction) {
+        if (direction == 0f)
+            return;
+
         if (Mathf.Pow(direction, 2) != 1)
             direction /= Mathf.Abs(direction);
+
         float velocity = sqrJumpHeight;
 
         Vector2 motion = new Vector2(direction, 1);
-        rigidbody.velocity = new Vector2(1, 1);
+        rigidbody.velocity = velocity * motion;
     }
 
     public bool IsGrounded() {

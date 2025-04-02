@@ -48,6 +48,12 @@ public class health : MonoBehaviour {
 
     Animator _anim;
 
+    //CameraShake camera;
+
+    Image darkScreen;
+    Color overlay;
+    float overlayAlpha = 0f;
+
     void Awake() 
     {
         charJump = GetComponent<CharacterJump>();
@@ -61,6 +67,11 @@ public class health : MonoBehaviour {
         _anim = GetComponent<Animator>();
 
         lightsource = GetComponent<Light2D>();
+
+        //camera = Camera.main.GetComponent<CameraShake>();
+
+        darkScreen = GameObject.Find("Dark Screen").GetComponent<Image>();
+        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha); 
     }
 
     void Update()
@@ -97,15 +108,14 @@ public class health : MonoBehaviour {
         // StartCoroutine(LongTransition());
 
         // this one might be better
-        StartCoroutine(RevivalTransition());
+        //StartCoroutine(RevivalTransition());
 
-        transform.position = restartPos[restartIndex];
-        healthPoints = 60;
+        // this is probably the best
+        StartCoroutine(RevivalAnim());
 
         // people seem to dislike this
         //restartIndex--;
 
-        _anim.SetTrigger("Spawn");
     }
 
     IEnumerator LongTransition()
@@ -140,6 +150,36 @@ public class health : MonoBehaviour {
 
         bloom.intensity.value = 8f;
         bloom.threshold.value = 0.55f;
+    }
+
+    IEnumerator RevivalAnim() {
+        yield return new WaitForSecondsRealtime(.2f);
+
+        transform.position = restartPos[restartIndex];
+        healthPoints = 60;
+
+        yield return new WaitForSecondsRealtime(.05f);
+
+        overlayAlpha = 1f;
+        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha);
+
+
+        while (overlayAlpha > 0.01f)
+        {
+            if (overlayAlpha < .25f)
+                _anim.SetTrigger("Spawn");
+
+
+            overlayAlpha = Mathf.Lerp(overlayAlpha, 0f, Time.unscaledDeltaTime * 0.5f);
+
+            float alpha = 1f - Mathf.Pow(1f - overlayAlpha, 2f);
+
+            darkScreen.color = darkScreen.color.WithAlpha(alpha); 
+            yield return null;
+        }
+
+        overlayAlpha = 0f;
+        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha); 
     }
 
     void RemoveHealth()
