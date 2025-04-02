@@ -71,7 +71,6 @@ public class CanonLaser : MonoBehaviour
         yield return new WaitForSeconds(1.9f);
         
         Instantiate(flashPrefab, position, rotation, laserSpot);
-
         audioSource.Play();
 
         yield return new WaitForSeconds(.1f);
