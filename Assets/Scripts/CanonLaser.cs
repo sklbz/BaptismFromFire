@@ -19,12 +19,15 @@ public class CanonLaser : MonoBehaviour
     bool _isShooting;
 
     CameraShake cameraShake;
+
+    AudioSource audioSource;
     
     private void Start() {
         laserSpot = GetComponentInChildren<LaserSpot>().transform;
         playerLayer = LayerMask.GetMask("Player");
         player = FindObjectOfType<Character>().transform;
         cameraShake = Camera.main.GetComponent<CameraShake>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -69,6 +72,8 @@ public class CanonLaser : MonoBehaviour
         
         Instantiate(flashPrefab, position, rotation, laserSpot);
 
+        audioSource.Play();
+
         yield return new WaitForSeconds(.1f);
 
         cameraShake.enabled = true;
@@ -99,7 +104,8 @@ public class CanonLaser : MonoBehaviour
 
     IEnumerator Restart() {
         yield return new WaitForSecondsRealtime(.5f);
-        player.GetComponent<health>().Resurrect();
+        player.GetComponent<health>()?.Resurrect();
+        player.GetComponent<Health>()?.Resurrect();
     }
 
     IEnumerator Cooldown() {

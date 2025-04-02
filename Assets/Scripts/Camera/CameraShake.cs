@@ -24,9 +24,6 @@ public class CameraShake : MonoBehaviour
 
     public void Shake() {
         Vector3 direction = new(Mathf.Cos(angle), Mathf.Sin(angle), 0);
-
-        Debug.Log(direction);
-
         cam.position += amplitude * Time.fixedDeltaTime * direction;
     }
 
