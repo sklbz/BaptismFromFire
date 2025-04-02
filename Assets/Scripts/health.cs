@@ -54,10 +54,13 @@ public class health : MonoBehaviour {
     Color overlay;
     float overlayAlpha = 0f;
 
+    CharacterController characterController;
+
     void Awake() 
     {
         charJump = GetComponent<CharacterJump>();
         charController = GetComponent<PlayerController>();
+        characterController = GetComponent<CharacterController>();
         charHover = GetComponent<hover>();
 
         postProcess.profile.TryGet(out bloom);
@@ -166,7 +169,7 @@ public class health : MonoBehaviour {
 
         while (overlayAlpha > 0.01f)
         {
-            if (overlayAlpha < .25f)
+            if (overlayAlpha < .5f)
                 _anim.SetTrigger("Spawn");
 
 
@@ -178,8 +181,19 @@ public class health : MonoBehaviour {
             yield return null;
         }
 
+
         overlayAlpha = 0f;
-        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha); 
+        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha);
+
+        string currentAnim = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+
+        while (currentAnim == "Spawn")
+        {
+            currentAnim = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            yield return null;
+        }
+
+        
     }
 
     void RemoveHealth()

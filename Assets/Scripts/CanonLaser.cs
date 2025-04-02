@@ -18,11 +18,13 @@ public class CanonLaser : MonoBehaviour
     bool _isVisible;
     bool _isShooting;
 
+    CameraShake cameraShake;
     
     private void Start() {
         laserSpot = GetComponentInChildren<LaserSpot>().transform;
         playerLayer = LayerMask.GetMask("Player");
         player = FindObjectOfType<Character>().transform;
+        cameraShake = Camera.main.GetComponent<CameraShake>();
     }
 
     void Update()
@@ -69,13 +71,23 @@ public class CanonLaser : MonoBehaviour
 
         yield return new WaitForSeconds(.1f);
 
+        cameraShake.enabled = true;
+
+
         LineRenderer laserBeam = Instantiate(laserPrefab, position, rotation, laserSpot).GetComponent<LineRenderer>();
         laserBeam.SetPosition(1, direction * 30);
+
+
+        Debug.Log(laserBeam, laserBeam.gameObject);
 
         isPlayerAligned = PlayerAligned();
 
         if (isPlayerAligned)
             Kill();
+
+        yield return new WaitForSecondsRealtime(.3f);
+
+        cameraShake.enabled = false;
     }
 
     void Kill() {

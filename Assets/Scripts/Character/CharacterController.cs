@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine; 
 
+using static StateName;
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class CharacterController : MonoBehaviour
     List<Transform> groundChecks;
     float sqrJumpHeight = 2f, jumpForce, jumpFactor = .8f;
     float speed = 4f, speedFactor = 130f;
+
+
 
     void Start()
     {
@@ -69,5 +73,16 @@ public class CharacterController : MonoBehaviour
 
     public StateName getState() {
         return characterState.getState();
+    }
+
+    public void Spawn() {
+        characterState = new SpawnState();
+    }
+
+    public void ReturnToIdle() {
+        if (getState() != DEFAULT)
+            return;
+
+        characterState = new IdleState();
     }
 }

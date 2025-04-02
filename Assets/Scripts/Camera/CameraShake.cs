@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class CameraShake : MonoBehaviour
 {
     Transform cam;
-    float amplitude = 5f;
+    readonly float amplitude = 3f;
     float angle;
     void Awake()
     {
@@ -15,20 +15,7 @@ public class CameraShake : MonoBehaviour
     }
 
     void FixedUpdate() {
-        amplitude *= 0.5f;
-        //SingleShake();
-
-        amplitude *= 2;
-        DoubleShake();
-    }
-
-    public void DoubleShake() {
-        angle = Random.Range(-Mathf.PI, Mathf.PI);
-
-        Shake();
-
-
-        Shake();
+        SingleShake();
     }
 
     public void Invert() {
@@ -48,8 +35,7 @@ public class CameraShake : MonoBehaviour
     }
 
     public void SingleShake() {
-        angle = Random.Range(-Mathf.PI, Mathf.PI);
-
+        Randomize();
         Shake();
     }
 }

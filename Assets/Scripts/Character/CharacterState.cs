@@ -134,3 +134,14 @@ public class DashingState : CharacterState {
         return this;
     }
 }
+
+public class SpawnState : CharacterState {
+    public override StateName getState() {
+        return DEFAULT;
+    }
+
+    public override CharacterState handleInput(CharacterController controller) {
+        return this;
+    }
+
+}
