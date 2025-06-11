@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    LifeSign[] lifeSigns;
+    void Start() {
+        lifeSigns = GetComponentsInChildren<LifeSign>(true);
+    }
+
+    void Update() {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Die() {
+        foreach(LifeSign sign in lifeSigns)
+        {
+            sign.gameObject.SetActive(false);
+        }
+
+    }
+
+    public void Resurect() {
+        foreach (LifeSign sign in lifeSigns)
+        {
+            sign.gameObject.SetActive(true);
+        }
     }
 }

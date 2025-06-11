@@ -37,8 +37,6 @@ public class CanonLaser : MonoBehaviour
 
         isPlayerAligned = PlayerAligned(); 
 
-        Debug.Log(isPlayerAligned);
-
         if (isPlayerAligned)
             ShootingProcedure();
     }

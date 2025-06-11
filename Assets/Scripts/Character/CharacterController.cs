@@ -29,6 +29,20 @@ public class CharacterController : MonoBehaviour
     void FixedUpdate()
     {
         characterState = characterState.handleInput(this);
+
+        // DEBUG INFO
+        switch (characterState.getState())
+        {
+            case DEFAULT:
+                Debug.Log("default");
+
+                break;
+            default:
+                Debug.Log("Unhandled case");
+
+                break;
+
+        }
     }
 
     public void Move(float motion) {

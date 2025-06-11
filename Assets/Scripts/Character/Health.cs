@@ -42,9 +42,11 @@ public class Health : MonoBehaviour {
     Color overlay;
     float overlayAlpha = 0f;
 
+    Character character;
     CharacterController characterController;
 
     void Awake() {
+        character = GetComponent<Character>();
         characterController = GetComponent<CharacterController>();
         _rb = GetComponent<Rigidbody2D>();
         lightsource = GetComponent<Light2D>();
@@ -77,6 +79,9 @@ public class Health : MonoBehaviour {
     }
 
     void UpdateLight() {
+        if (healthPoints == 0)
+            return;
+
         float desiredLight = Mathf.Lerp(minLight, maxLight, healthPoints * 0.017f);
         lightsource.intensity = Mathf.Lerp(lightsource.intensity, desiredLight, lightInterp);
     }
@@ -84,7 +89,10 @@ public class Health : MonoBehaviour {
     public void Resurrect() {
         totalTime = 0f;
         _rb.velocity = Vector2.zero;
+
         gameObject.SetActive(true);
+        lightsource.intensity = 0;
+        character.Die();
 
         StartCoroutine(RevivalAnim());
     }
@@ -193,5 +201,6 @@ public class Health : MonoBehaviour {
     void Retry() {
         ResetPosition();
         characterController.Spawn();
+        character.Resurect();
     }
 }
