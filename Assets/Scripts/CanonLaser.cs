@@ -80,7 +80,7 @@ public class CanonLaser : MonoBehaviour
         laserBeam.SetPosition(1, direction * 30);
 
 
-        Debug.Log(laserBeam, laserBeam.gameObject);
+        // Debug.Log(laserBeam, laserBeam.gameObject);
 
         isPlayerAligned = PlayerAligned();
 

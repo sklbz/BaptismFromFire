@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static StateName;
+using static Direction;
 
 public class CharacterState {
  
@@ -85,6 +86,14 @@ public class JumpingState : CharacterState {
         if (controller.IsGrounded())
             return new IdleState();
 
+        Direction wallDirection = controller.IsWalled();
+
+        if (wallDirection == LEFT)
+            return new WallLeftState();
+
+        if (wallDirection == RIGHT)
+            return new WallRightState();
+
         return this;
     }
 }
@@ -115,8 +124,24 @@ public class WallLeftState : WallSlidingState {
             return baseState;
         if (baseName == JUMPING)
         {
-            float direction = 1f;
-            controller.WallJump(direction);
+            controller.WallJump(RIGHT);
+            return baseState;
+        }
+
+        return this;
+    }
+}
+
+public class WallRightState : WallSlidingState {
+    public override CharacterState handleInput(CharacterController controller) {
+        CharacterState baseState = base.handleInput(controller);
+        StateName baseName = baseState.getState();
+
+        if (baseName == GROUNDED)
+            return baseState;
+        if (baseName == JUMPING)
+        {
+            controller.WallJump(LEFT);
             return baseState;
         }
 

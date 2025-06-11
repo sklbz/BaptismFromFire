@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine; 
 
 using static StateName;
+using static Direction;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController : MonoBehaviour
@@ -11,9 +12,11 @@ public class CharacterController : MonoBehaviour
     CharacterState characterState;
     new Rigidbody2D rigidbody;
     [SerializeField]
-    LayerMask groundMask;
+    LayerMask groundMask, wallMask;
     [SerializeField]
     List<Transform> groundChecks;
+    [SerializeField]
+    Transform leftCheck, rightCheck;
     float sqrJumpHeight = 2f, jumpForce, jumpFactor = .8f;
     float speed = 4f, speedFactor = 130f;
 
@@ -37,6 +40,26 @@ public class CharacterController : MonoBehaviour
                 Debug.Log("default");
 
                 break;
+            case GROUNDED:
+                Debug.Log("grounded");
+
+                break;
+            case JUMPING:
+                Debug.Log("jumping");
+
+                break;
+            case DOUBLE_JUMPING:
+                Debug.Log("double jumping");
+
+                break;
+            case WALL_SLIDING:
+                Debug.Log("wall sliding");
+
+                break;
+            case DASHING:
+                Debug.Log("dashing");
+
+                break;
             default:
                 Debug.Log("Unhandled case");
 
@@ -58,17 +81,16 @@ public class CharacterController : MonoBehaviour
         rigidbody.velocity = new Vector2(0f, velocity);
     }
 
-    public void WallJump(float direction) {
-        if (direction == 0f)
+    public void WallJump(Direction direction) {
+        if (direction != LEFT && direction != RIGHT)
             return;
 
-        if (Mathf.Pow(direction, 2) != 1)
-            direction /= Mathf.Abs(direction);
+        float velocity = sqrJumpHeight * jumpForce;
 
-        float velocity = sqrJumpHeight;
+        float horizontal_motion = direction == LEFT ? -velocity : velocity;
 
-        Vector2 motion = new Vector2(direction, 1);
-        rigidbody.velocity = velocity * motion;
+        Vector2 motion = new Vector2(horizontal_motion * 100f, velocity);
+        rigidbody.velocity = motion;
     }
 
     public bool IsGrounded() {
@@ -83,6 +105,16 @@ public class CharacterController : MonoBehaviour
             }
         };
         return groundCheckDown;
+    }
+
+    public Direction IsWalled() {
+        if (Physics2D.OverlapCircle(leftCheck.position, .1f, wallMask))
+            return LEFT;
+
+        if (Physics2D.OverlapCircle(rightCheck.position, .1f, wallMask))
+            return RIGHT;
+
+        return NONE;
     }
 
     public StateName getState() {
