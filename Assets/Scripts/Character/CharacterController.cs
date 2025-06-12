@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.UI;
 
 using static StateName;
 using static Direction;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController : MonoBehaviour
@@ -18,7 +20,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     Transform leftCheck, rightCheck;
     float sqrJumpHeight = 2f, jumpForce, jumpFactor = .8f;
+    float sideModifier = 2f;
     float speed = 4f, speedFactor = 130f;
+
+    public InputWrapper joystick;
+    Button jumpButton;
+    public bool isJumpButtonPressed = false;
+
 
 
 
@@ -27,7 +35,23 @@ public class CharacterController : MonoBehaviour
         characterState = new IdleState();
         rigidbody = GetComponent<Rigidbody2D>();
         jumpForce = Mathf.Sqrt(-2f * Physics2D.gravity.y * rigidbody.gravityScale * jumpFactor);
+        joystick = FindObjectOfType<InputWrapper>();
+        jumpButton = FindObjectOfType<Button>();
+
+        jumpButton.onClick.AddListener(JumpListener);
     }
+
+    void JumpListener() {
+        isJumpButtonPressed = true;
+        StartCoroutine(ResetJumpButton());
+    }
+
+    IEnumerator ResetJumpButton() {
+        yield return new WaitForEndOfFrame();
+
+        isJumpButtonPressed = false;
+    }
+
 
     void FixedUpdate()
     {
@@ -89,9 +113,25 @@ public class CharacterController : MonoBehaviour
 
         float horizontal_motion = direction == LEFT ? -velocity : velocity;
 
-        Vector2 motion = new Vector2(horizontal_motion * 100f, velocity);
+        Vector2 motion = new Vector2(horizontal_motion * sideModifier, velocity);
         rigidbody.velocity = motion;
     }
+
+    /*
+    IEnumerator ResetHorizontalVelocity() {
+        while (rigidbody.velocity.y > 0)
+            yield return null;
+
+        while (Mathf.Abs(rigidbody.velocity.x) > .1)
+        {
+            rigidbody.velocity = Vector2.Lerp(rigidbody.velocity, new Vector2(0, rigidbody.velocity.y + Physics2D.gravity.y * Time.deltaTime), Time.deltaTime);
+            yield return null;
+        }
+
+        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
+    }
+    */
+
 
     public bool IsGrounded() {
 

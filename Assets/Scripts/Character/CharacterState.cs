@@ -18,7 +18,8 @@ public class CharacterState {
     }
 
     void handleHorizontal(CharacterController controller) {
-        float motion = Input.GetAxisRaw("Horizontal");
+        // float motion = Input.GetAxisRaw("Horizontal");
+        float motion = controller.joystick.Horizontal();
 
         controller.Move(motion);
     }
@@ -33,7 +34,8 @@ public class GroundState : CharacterState {
     public override CharacterState handleInput(CharacterController controller) {
         base.handleInput(controller);
 
-        if (Input.GetButtonDown("Jump"))
+        // if (Input.GetButtonDown("Jump"))
+        if (controller.isJumpButtonPressed)
         {
             controller.VerticalJump();
             return new JumpingState();

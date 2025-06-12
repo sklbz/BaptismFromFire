@@ -5210,6 +5210,7 @@ MonoBehaviour:
   - {fileID: 5636498162103557000}
   leftCheck: {fileID: 7014863644266005929}
   rightCheck: {fileID: 7208848748739875547}
+  joystick: {fileID: 0}
 --- !u!114 &4033876757271706276
 MonoBehaviour:
   m_ObjectHideFlags: 0
