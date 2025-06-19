@@ -4,13 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Spawnpoint
   - CheckpointDoubleJump
   - CheckpointDash
   - CheckpointTripleJump
   - CheckpointHover
   - Heal
   - dark-screen
+  - AI_Left
+  - AI_Right
+  - AI_Jump
   layers:
   - Default
   - TransparentFX

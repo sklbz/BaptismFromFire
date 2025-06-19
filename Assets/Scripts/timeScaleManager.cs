@@ -6,6 +6,7 @@ public class timeScaleManager : MonoBehaviour
 {
     [SerializeField]
     float timeScaler;
+
     void Update()
     {
         Time.timeScale = timeScaler;

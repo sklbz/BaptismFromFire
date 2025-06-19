@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 using static StateName;
 using static Direction;
-using System;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(InputHandler))]
 public class CharacterController : MonoBehaviour
 {
     CharacterState characterState;
@@ -19,46 +16,39 @@ public class CharacterController : MonoBehaviour
     List<Transform> groundChecks;
     [SerializeField]
     Transform leftCheck, rightCheck;
-    float sqrJumpHeight = 2f, jumpForce, jumpFactor = .8f;
-    float sideModifier = 2f;
-    float speed = 4f, speedFactor = 130f;
+    float sqrJumpHeight = 2f, jumpForce, jumpFactor = .82f;
+    float jumpVelocity, sideModifier = .45f;
+    float doubleJumpFactor = 0.8f;
+    float speed = 4.55f, speedFactor = 130f;
+    float wallJumpDelay = .6f;
 
-    public InputWrapper joystick;
-    Button jumpButton;
-    public bool isJumpButtonPressed = false;
+    InputHandler input;
+    public InputHandler Input {
+        get { return input; }
+    }
 
 
-
+    public bool canMove = true;
+    public bool canDoubleJump = false;
+    bool canExtraJump = true;
 
     void Start()
     {
+
         characterState = new IdleState();
+        input = GetComponent<InputHandler>();
         rigidbody = GetComponent<Rigidbody2D>();
+
         jumpForce = Mathf.Sqrt(-2f * Physics2D.gravity.y * rigidbody.gravityScale * jumpFactor);
-        joystick = FindObjectOfType<InputWrapper>();
-        jumpButton = FindObjectOfType<Button>();
-
-        jumpButton.onClick.AddListener(JumpListener);
+        jumpVelocity = sqrJumpHeight * jumpForce;
     }
-
-    void JumpListener() {
-        isJumpButtonPressed = true;
-        StartCoroutine(ResetJumpButton());
-    }
-
-    IEnumerator ResetJumpButton() {
-        yield return new WaitForEndOfFrame();
-
-        isJumpButtonPressed = false;
-    }
-
 
     void FixedUpdate()
     {
         characterState = characterState.handleInput(this);
 
         // DEBUG INFO
-        switch (characterState.getState())
+        /* switch (characterState.getState())
         {
             case DEFAULT:
                 Debug.Log("default");
@@ -89,31 +79,54 @@ public class CharacterController : MonoBehaviour
 
                 break;
 
-        }
+        } */
     }
 
     public void Move(float motion) {
+        if (!canMove)
+            return;
 
         motion *= speed * speedFactor * Time.unscaledDeltaTime * rigidbody.gravityScale;
+
+        /* if (!IsGrounded())
+        {
+            float interpolationRatio = Time.deltaTime * 20f;
+            float currentVelocity = getVelocity();
+            motion = Mathf.Lerp(motion, currentVelocity, interpolationRatio);
+        } */
 
         rigidbody.velocity = new Vector2(motion, rigidbody.velocity.y);
     }
 
     public void VerticalJump() {
-        float velocity = sqrJumpHeight * jumpForce;
+        if (!canMove) return;
+        if (!canExtraJump) return;
 
-        rigidbody.velocity = new Vector2(0f, velocity);
+        float currentVelocity = getVelocity();
+        rigidbody.velocity = new Vector2(currentVelocity, jumpVelocity);
+
+        StartCoroutine(ResetDoubleJump());
+        StartCoroutine(PreventExtraJump());
+    }
+
+    public void DoubleJump() {
+        if (!canDoubleJump) return;
+        if (!canExtraJump) return;
+
+        float currentVelocity = getVelocity();
+        rigidbody.velocity = new Vector2(currentVelocity, jumpVelocity * doubleJumpFactor);
     }
 
     public void WallJump(Direction direction) {
+        if (!canExtraJump) return;
         if (direction != LEFT && direction != RIGHT)
             return;
 
-        float velocity = sqrJumpHeight * jumpForce;
+        StartCoroutine(ResetMove(wallJumpDelay));
 
-        float horizontal_motion = direction == LEFT ? -velocity : velocity;
+        float horizontal_motion = direction == LEFT ? -jumpVelocity : jumpVelocity;
 
-        Vector2 motion = new Vector2(horizontal_motion * sideModifier, velocity);
+        Vector2 motion = new Vector2(horizontal_motion * sideModifier, jumpVelocity);
         rigidbody.velocity = motion;
     }
 
@@ -134,7 +147,6 @@ public class CharacterController : MonoBehaviour
 
 
     public bool IsGrounded() {
-
         bool groundCheckDown = false;
         foreach (Transform groundCheck in groundChecks)
         {
@@ -170,5 +182,30 @@ public class CharacterController : MonoBehaviour
             return;
 
         characterState = new IdleState();
+    }
+
+    float getVelocity() {
+        float currentVelocity = rigidbody.velocity.x;
+        return float.IsNaN(currentVelocity) ? 0 : currentVelocity;
+    }
+
+
+    IEnumerator ResetMove(float delay) {
+        canMove = false;
+        yield return new WaitForSeconds(delay * Time.timeScale);
+        canMove = true;
+    }
+
+    IEnumerator ResetDoubleJump() {
+        bool currentState = canDoubleJump;
+        canDoubleJump = false;
+        yield return new WaitForEndOfFrame();
+        canDoubleJump = currentState;
+    }
+
+    IEnumerator PreventExtraJump() {
+        canExtraJump = false;
+        yield return new WaitForEndOfFrame();
+        canExtraJump = true;
     }
 }

@@ -18,8 +18,7 @@ public class CharacterState {
     }
 
     void handleHorizontal(CharacterController controller) {
-        // float motion = Input.GetAxisRaw("Horizontal");
-        float motion = controller.joystick.Horizontal();
+        float motion = controller.Input.GetHorizontal();
 
         controller.Move(motion);
     }
@@ -34,8 +33,7 @@ public class GroundState : CharacterState {
     public override CharacterState handleInput(CharacterController controller) {
         base.handleInput(controller);
 
-        // if (Input.GetButtonDown("Jump"))
-        if (controller.isJumpButtonPressed)
+        if (controller.Input.GetJump())
         {
             controller.VerticalJump();
             return new JumpingState();
@@ -69,7 +67,7 @@ public class MovingState : GroundState {
         if (baseState.getState() != GROUNDED)
             return baseState;
 
-        if (Input.GetAxisRaw("Horizontal") == 0)
+        if (controller.Input.GetHorizontal() == 0)
             return new IdleState();
 
         return this;
@@ -96,8 +94,39 @@ public class JumpingState : CharacterState {
         if (wallDirection == RIGHT)
             return new WallRightState();
 
+        if (controller.Input.GetJump())
+        {
+            controller.DoubleJump();
+            return new DoubleJumpingState();
+        }
+
+
         return this;
     }
+}
+
+public class DoubleJumpingState : CharacterState {
+    public override StateName getState() {
+        return DOUBLE_JUMPING;
+    }
+
+    public override CharacterState handleInput(CharacterController controller) {
+        base.handleInput(controller);
+
+        if (controller.IsGrounded())
+            return new IdleState();
+
+        Direction wallDirection = controller.IsWalled();
+
+        if (wallDirection == LEFT)
+            return new WallLeftState();
+
+        if (wallDirection == RIGHT)
+            return new WallRightState();
+
+        return this;
+    }
+
 }
 
 public class WallSlidingState : CharacterState {
@@ -110,7 +139,7 @@ public class WallSlidingState : CharacterState {
         if (controller.IsGrounded())
             return new IdleState();
 
-        if (Input.GetButtonDown("Jump"))
+        if (controller.Input.GetJump())
             return new JumpingState();
 
         return this;

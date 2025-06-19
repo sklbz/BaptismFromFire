@@ -7,7 +7,6 @@ using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 
 public class Health : MonoBehaviour {
-    public float totalTime;
     int _healthPoints = 60;
     public int healthPoints {
         set {
@@ -45,6 +44,7 @@ public class Health : MonoBehaviour {
     Character character;
     CharacterController characterController;
 
+
     void Awake() {
         character = GetComponent<Character>();
         characterController = GetComponent<CharacterController>();
@@ -52,7 +52,9 @@ public class Health : MonoBehaviour {
         lightsource = GetComponent<Light2D>();
 
         darkScreen = GameObject.Find("Dark Screen").GetComponent<Image>();
-        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha);
+        overlay = darkScreen.color;
+        overlay.a = overlayAlpha;
+        darkScreen.color = overlay;
 
 
         restartPos[0] = new (-3, 3, 0);
@@ -62,7 +64,6 @@ public class Health : MonoBehaviour {
     }
 
     void Update() {
-        totalTime += Time.unscaledDeltaTime;
         UpdateLight();
         if (healthPoints == 0)
         {
@@ -87,7 +88,6 @@ public class Health : MonoBehaviour {
     }
 
     public void Resurrect() {
-        totalTime = 0f;
         _rb.velocity = Vector2.zero;
 
         gameObject.SetActive(true);
@@ -98,6 +98,8 @@ public class Health : MonoBehaviour {
     }
 
     IEnumerator RevivalAnim() {
+        characterController.canMove = false;
+
         yield return new WaitForSecondsRealtime(.2f);
 
         Retry();
@@ -133,13 +135,15 @@ public class Health : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D coll) {
-        if (coll.gameObject.CompareTag("Spawnpoint"))
+        if (coll.gameObject.CompareTag("Respawn"))
         {
             HandleHealZone();
         }
         if (coll.gameObject.CompareTag("CheckpointDoubleJump"))
         {
             HandleHealZone();
+
+            characterController.canDoubleJump = true;
 
             if (originalRestart < 0 && restartIndex <= 1)
                 restartIndex = 1;
@@ -179,18 +183,24 @@ public class Health : MonoBehaviour {
 
     void DarkenScreen() {
         overlayAlpha = 1f;
-        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha);
+
+        overlay.a = overlayAlpha;
+        darkScreen.color = overlay;
     }
 
     void FadeOverlay() {
         overlayAlpha = Mathf.Lerp(overlayAlpha, 0f, Time.unscaledDeltaTime * 0.5f);
         float alpha = 1f - Mathf.Pow(1f - overlayAlpha, 2f);
-        darkScreen.color = darkScreen.color.WithAlpha(alpha);
+
+        overlay.a = alpha;
+        darkScreen.color = overlay;
     }
 
     void ResetOverlay() {
         overlayAlpha = 0f;
-        darkScreen.color = darkScreen.color.WithAlpha(overlayAlpha);
+
+        overlay.a = overlayAlpha;
+        darkScreen.color = overlay;
     }
 
     void ResetPosition() {
@@ -202,5 +212,6 @@ public class Health : MonoBehaviour {
         ResetPosition();
         characterController.Spawn();
         character.Resurect();
+        characterController.canMove = true;
     }
 }

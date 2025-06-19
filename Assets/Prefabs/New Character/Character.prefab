@@ -4919,6 +4919,7 @@ GameObject:
   - component: {fileID: 4370047964280428561}
   - component: {fileID: 4033876757271706276}
   - component: {fileID: 7032840082473273071}
+  - component: {fileID: 1855154838594389711}
   m_Layer: 12
   m_Name: Character
   m_TagString: Player
@@ -4939,12 +4940,12 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2131677706387449095}
   - {fileID: 5636498162103557000}
   - {fileID: 7014863644266005929}
   - {fileID: 7208848748739875547}
   - {fileID: 3128012790015221427}
   - {fileID: 1533132354641096667}
-  - {fileID: 2131677706387449095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &7190262148467289098
@@ -5039,7 +5040,7 @@ MonoBehaviour:
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.70179373, b: 0.5, a: 1}
   m_Intensity: 1.89
-  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensity: 0.05
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -5210,7 +5211,8 @@ MonoBehaviour:
   - {fileID: 5636498162103557000}
   leftCheck: {fileID: 7014863644266005929}
   rightCheck: {fileID: 7208848748739875547}
-  joystick: {fileID: 0}
+  canMove: 1
+  canDoubleJump: 0
 --- !u!114 &4033876757271706276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5237,6 +5239,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalTime: 0
   timer: 0
+--- !u!114 &1855154838594389711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5723136179815100360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e695467053200d84a865aacc41d214ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: 0
 --- !u!1 &7192072001981426753
 GameObject:
   m_ObjectHideFlags: 0
@@ -5284,9 +5299,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 1
+  m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 0.47843137, b: 0.1254902, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 00000000
@@ -5298,17 +5313,17 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 1
+  m_ShadowIntensityEnabled: 0
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensityEnabled: 1
-  m_ShadowVolumeIntensity: 0.3
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.15
-  m_PointLightOuterRadius: 7
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 3
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

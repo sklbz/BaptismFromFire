@@ -14,3 +14,9 @@ public enum StateName {
     WALL_SLIDING,
     DASHING
 }
+
+public enum InputSource {
+    AI,
+    KEYBOARD,
+    JOYSTICK
+}
