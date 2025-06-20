@@ -90,11 +90,13 @@ public class InputHandler : MonoBehaviour
     }
 
     void JumpListener() {
-        isJumpButtonPressed = true;
         StartCoroutine(ResetJumpButton());
     }
 
     IEnumerator ResetJumpButton() {
+        isJumpButtonPressed = true;
+
+        yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
 
         isJumpButtonPressed = false;

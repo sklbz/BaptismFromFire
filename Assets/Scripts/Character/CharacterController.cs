@@ -205,7 +205,10 @@ public class CharacterController : MonoBehaviour
 
     IEnumerator PreventExtraJump() {
         canExtraJump = false;
+
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
         canExtraJump = true;
     }
 }
