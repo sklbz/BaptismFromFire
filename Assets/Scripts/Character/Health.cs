@@ -100,12 +100,7 @@ public class Health : MonoBehaviour {
     IEnumerator RevivalAnim() {
         characterController.canMove = false;
 
-        yield return new WaitForSecondsRealtime(.2f);
-
         Retry();
-
-        yield return new WaitForSecondsRealtime(.05f);
-
         DarkenScreen();
 
 

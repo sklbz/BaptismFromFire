@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour
     float doubleJumpFactor = 0.8f;
     float speed = 4.55f, speedFactor = 130f;
     float wallJumpDelay = .6f;
+    float dampingFactor = .2f;
 
     InputHandler input;
     public InputHandler Input {
@@ -31,6 +32,7 @@ public class CharacterController : MonoBehaviour
     public bool canMove = true;
     public bool canDoubleJump = false;
     bool canExtraJump = true;
+    bool isSideJumping = false;
 
     void Start()
     {
@@ -46,6 +48,11 @@ public class CharacterController : MonoBehaviour
     void FixedUpdate()
     {
         characterState = characterState.handleInput(this);
+
+        if (IsGrounded())
+        {
+            isSideJumping = false;
+        }
 
         // DEBUG INFO
         /* switch (characterState.getState())
@@ -86,7 +93,16 @@ public class CharacterController : MonoBehaviour
         if (!canMove)
             return;
 
-        motion *= speed * speedFactor * Time.unscaledDeltaTime * rigidbody.gravityScale;
+        float unscaledFixedDeltaTime = Time.fixedDeltaTime / Time.timeScale;
+
+        motion *= speed * speedFactor * unscaledFixedDeltaTime * rigidbody.gravityScale;
+
+        float interpolationRatio = dampingFactor * unscaledFixedDeltaTime;
+
+        bool applyDamping = isSideJumping;
+
+        if (applyDamping)
+            motion = Mathf.Lerp(getVelocity(), motion, interpolationRatio);
 
         /* if (!IsGrounded())
         {
@@ -128,6 +144,8 @@ public class CharacterController : MonoBehaviour
 
         Vector2 motion = new Vector2(horizontal_motion * sideModifier, jumpVelocity);
         rigidbody.velocity = motion;
+
+        isSideJumping = true;
     }
 
     /*

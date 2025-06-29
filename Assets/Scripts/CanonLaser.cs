@@ -100,14 +100,14 @@ public class CanonLaser : MonoBehaviour
     }
 
     IEnumerator Restart() {
-        yield return new WaitForSecondsRealtime(.5f);
+        yield return new WaitForSecondsRealtime(.9f);
         player.GetComponent<health>()?.Resurrect();
         player.GetComponent<Health>()?.Resurrect();
     }
 
     IEnumerator Cooldown() {
         _isShooting = true;
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(4);
         _isShooting = false;
     }
 
